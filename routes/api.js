@@ -1,32 +1,51 @@
-var db = require("../models");
+const db = require("../models");
 
 module.exports = function(app) {
 
-  app.post("/api/workout", (req, res) => {
-    db.Workout.create(req.body, (err, data) => {
-      if (err) {
-        res.json(err);        
-      } else {
-        res.json(data);
-      }
-    });
+  app.get("/api/workouts", (req, res) => {
+    db.Workout.aggregate(
+      [{$addFields: {
+        totalDuration: {
+          $sum: "$exercises.duration"
+          }
+        }
+      }]
+    ).then(dbWorkouts => {
+      res.json(dbWorkouts);
+    })
   });
 
-  app.put("/api/workout/:id", ({ body, params }, res) => {
-    db.Workout.updateOne(
-      {_id: req.params.id}, {$push: {exercises: req.body}}, (err, data) => {
-        if (err) {
-          res.json(err);
-        } else {
-          res.json(data);
-        }
-      });    
+  app.post("/api/workouts", (req, res) => {
+    db.Workout.create({})
+      .then(dbWorkouts => {
+        res.json(dbWorkouts);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+    });
+
+  app.put("/api/workouts/:id", ({ body, params }, res) => {
+    db.Workout.updateOne({_id: params.id}, {$push: {exercises: body} })
+      .then(dbWorkouts => {
+        res.json(dbWorkouts);
+    })
+    .catch(err => {
+        res.json(err);
+    }); 
+
   });
   
-  app.get("/api/workouts", (req, res) => {
-    db.Workout.find({}).then(dbWorkouts => {
-        res.json(dbWorkouts);
-    });
-  });
+  app.get("/api/workouts/range", ({ query }, res) => {
+    db.Workout.find({})
+        .then(dbWorkouts => {
+            res.json(dbWorkouts);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+    }); 
 
-};
+
+
+  };
