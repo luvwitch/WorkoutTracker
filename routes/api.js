@@ -37,14 +37,18 @@ module.exports = function(app) {
   });
   
   app.get("/api/workouts/range", ({ query }, res) => {
-    db.Workout.find({})
-        .then(dbWorkouts => {
-            res.json(dbWorkouts);
-        })
-        .catch(err => {
-            res.json(err);
-        });
-    }); 
+    db.Workout.aggregate([
+      {$addFields: {
+        totalDuration: {
+          $sum: "$exercises.duration"
+          }
+        }
+      },
+      {$limit: 7}
+    ]).then(dbWorkouts => {
+      res.json(dbWorkouts);
+    })
+  });
 
 
 
