@@ -36,17 +36,19 @@ Even simpler, accessing the website through its heroku deployment takes you to t
 
 The home page of the application looks like this:
 
-![home]()
+![home](https://github.com/luvwitch/WorkoutTracker/blob/main/public/image/home.png?raw=true)
 
 Clicking the new workout button allows you to begin a new workout.
 
-![add]()
+![add](https://github.com/luvwitch/WorkoutTracker/blob/main/public/image/add.png?raw=true)
 
 You can add multiple exercises within a single workout and differentiate between "cardio" and "resistance" training. Once everything is added, you can click the "complete" button to finish a workout. You can also continue your latest workout at a later time from the home page by pressing "continue workout" instead of "new workout".
 
-![resistance]()
+![resistance](https://github.com/luvwitch/WorkoutTracker/blob/main/public/image/resistance.png?raw=true)
 
 The dashboard will show you two different charts tracking your workout progress from the past week. It uses different colors to differentiate between exercises and charts how many minutes were spent on each exercise overall, and how much weight was lifted total for each exercise.
+
+![dashboard](https://github.com/luvwitch/WorkoutTracker/blob/main/public/image/dashboard.png?raw=true)
 
 
 This application is live at: 
